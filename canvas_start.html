@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drawing Area</title>
+    <!-- You can add your style here rather than in an external style sheet. -->
+    <style>
+      canvas {
+        border: 5px solid #d3d3d3;
+        background-color: #f1f1f1;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- DO NOT MODIFY THIS HTML -->
+    <canvas id="myCanvas" width="350" height="500"></canvas
+    ><script>
+      var canvas = document.getElementById("myCanvas");
+      var context = canvas.getContext("2d");
+
+      // Adjust Canvas Size
+      viewh = document.documentElement.clientHeight;
+      vieww = document.documentElement.clientWidth;
+      canvas.setAttribute("width", vieww * 0.8);
+      canvas.setAttribute("height", viewh * 0.8);
+      var isDrawing = true;
+      var radius = 10;
+      var color = "red";
+
+      window.addEventListener("mousemove", function(e) {
+        x = e.pageX;
+        y = e.pageY;
+        draw(x, y);
+      });
+
+      function draw(posx, posy) {
+        if (isDrawing == true) {
+          context.fillStyle = color;
+          context.beginPath();
+          context.arc(posx - 10, posy - 10, radius, 0, 2 * Math.PI);
+          context.fill();
+        }
+      }
+
+      window.addEventListener("keydown", function(e) {
+        switch (e.key) {
+          case "b":
+            console.log("Change color to Blue");
+            color = "blue";
+            break;
+          case "y":
+            console.log("Change color to Yellow");
+            color = "yellow";
+            break;
+          case "r":
+            console.log("Change color to Red");
+            color = "red";
+            break;
+          case "g":
+            console.log("Change color to Green");
+            color = "green";
+            break;
+          case "ArrowUp":
+            console.log("Pen Up");
+            isDrawing = false;
+            break;
+          case "ArrowDown":
+            console.log("Pen Down");
+            isDrawing = true;
+            break;
+          case " ":
+            console.log("Clear Screen");
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            break;
+        }
+      });
+      function colorpicker(newColor) {
+        console.log("color picked: ", newColor);
+        color = newColor;
+      }
+    </script>
+    <input type="color" value="#FFFFFF" onchange="colorpicker(value)" />
+  </body>
+</html>
